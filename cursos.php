@@ -111,6 +111,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 2rem;
         }
 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: solid 1px #ddd;
+            padding: 6px;
+        }
+
+        th {
+            background: #f0f0ff;
+        }
+
     </style>
 </head>
 
@@ -152,6 +167,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <button type="submit">Cadastrar Curso</button>
         </form>
+        <div class="resultados">
+        <h1>Professores cadastrados</h1>
+
+        <table>
+            <thead>
+                <th>Curso</th>
+                <th>Horário</th>
+            </thead>
+            <tbody>
+                 <?php
+                    $sql_busca = "SELECT * FROM cursos";
+                    $stmt_busca = $conexao->prepare($sql_busca);
+                    $stmt_busca->execute();
+                    while ($curso = $stmt_busca->fetch(PDO::FETCH_ASSOC)) {
+                        echo "<tr>";
+                        echo "<td><div>{$curso['nome_curso']}</div> <div>{$curso['sigla_curso']}</div></td>";
+                         echo "<td><div>{$curso['hora_inicio_curso']}</div> <div>{$curso['hora_fim_curso']}</div></td>";
+                        echo "</tr>";
+                    }
+                ?>
+            </tbody>
+        </table>
+    </div>
     </div>
     <script>
          function professores() {
